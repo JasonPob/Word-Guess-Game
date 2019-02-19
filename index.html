@@ -1,1 +1,71 @@
-index.html
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="game.js"></script>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <title>Word Guess Game</title>
+</head>
+
+<body>
+    <h1>PENN Hangman!</h1>
+    <div>
+        <p id="instructions-text"> Press any key to get started!</p>
+        <p id="gamesWon"></p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p id="currentWord"></p>
+        <p id="guessesRemaining"></p>
+        <p id="lettersGuessed"></p>
+    </div>
+
+    <script type="text/javascript">
+        //array containing all possible generated words
+        var generatedWord = ["anthony", "eliza", "petrell", "cadin"]
+
+        //variables that hold #ofgameswon, guesses remaining, letters guessed
+        var gamesWon = 0;
+        var currentWord = [];
+        var guessesRemaining = 6;
+        var lettersGuessed = [];
+        var remainingLetters = currentWord.length;
+
+        //variables that hold references to the places in the HTML where we want to display things
+        var gamesWon = document.getElementById("gamesWon");
+        var currentWord = document.getElementById("currentWord");
+        var guessesRemaining = document.getElementById("guessesRemaining");
+        var lettersGuessed = documents.getElementById("lettersGuessed");
+        var remainingLetters = document.getElementById("remaningLetters");
+
+        //Randomly choose a word
+        var currentWord = generatedWord[Math.floor(math.random() * generatedWord.length)];
+
+        //function run whenever the user guesses a letter
+        document.onkeyup = function.key; {
+
+            // determining which key was pressed
+            var userGuess = event.key;
+
+            //logic determining how the game is ran
+
+
+
+            //display your #ofgameswon, guesses remaining, lettersguessed
+            gamesWon.textContent = "Games won: " + gamesWon;
+            currentWord.textContent = "current word (must fix)";
+            guessesRemaining.textContent = "Guesses Remaining " + guessesRemaining;
+            lettersGuessed.textContent = "Letters guessed: " + lettersGuessed;
+            remainingLetters.textContent = "# of letters remaining: " + remainingLetters;
+        }
+
+    </script>
+
+
+
+
+</body>
+
+</html>
