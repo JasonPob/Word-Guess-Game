@@ -3,62 +3,92 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="game.js"></script>
-    <link rel="stylesheet" type="text/css" href="reset.css">
+    <!-- <script src="assets/javascript/"></script> -->
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <title>Word Guess Game</title>
 </head>
 
 <body>
-    <h1>PENN Hangman!</h1>
+    <h1>Penn Hangman!</h1>
     <div>
+        <br>
         <p id="instructions-text"> Press any key to get started!</p>
-        <p id="gamesWon"></p>
-        <br>
-        <br>
         <br>
         <br>
         <p id="currentWord"></p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p id="answerArray"></p>
+        <p id="gamesWon"></p>
         <p id="guessesRemaining"></p>
         <p id="lettersGuessed"></p>
+        <p id="remainingLetters"></p>
     </div>
 
     <script type="text/javascript">
         //array containing all possible generated words
         var generatedWord = ["anthony", "eliza", "petrell", "cadin"]
-
+        
+        //Randomly choose a word
+        var currentWord = generatedWord[Math.floor(Math.random() * generatedWord.length)];
+        console.log(currentWord);
+        currentWord.textContent = "Current word: " + currentWord;
+        //answer array
+        var answerArray = [];
+        for (var i = 0; i < currentWord.length; i++) {
+            answerArray[i] = "_";
+        }
+        var remainingLetters = currentWord.length;
         //variables that hold #ofgameswon, guesses remaining, letters guessed
         var gamesWon = 0;
-        var currentWord = [];
+        // var currentWord = [];
         var guessesRemaining = 6;
         var lettersGuessed = [];
-        var remainingLetters = currentWord.length;
 
+        var findmatch = 0;
         //variables that hold references to the places in the HTML where we want to display things
-        var gamesWon = document.getElementById("gamesWon");
-        var currentWord = document.getElementById("currentWord");
-        var guessesRemaining = document.getElementById("guessesRemaining");
-        var lettersGuessed = documents.getElementById("lettersGuessed");
-        var remainingLetters = document.getElementById("remaningLetters");
+        var gamesWonText = document.getElementById("gamesWon");
+        var currentWordText = document.getElementById("currentWord");
+        var guessesRemainingText = document.getElementById("guessesRemaining");
+        var lettersGuessedText = document.getElementById("lettersGuessed");
+        var remainingLettersText = document.getElementById("remainingLetters");
+        var answerArrayText = document.getElementById("answerArray");
 
-        //Randomly choose a word
-        var currentWord = generatedWord[Math.floor(math.random() * generatedWord.length)];
 
         //function run whenever the user guesses a letter
-        document.onkeyup = function.key; {
+        document.onkeyup = function (event) {
 
             // determining which key was pressed
             var userGuess = event.key;
+            console.log(userGuess);
+            findmatch = 0;
 
             //logic determining how the game is ran
+            if (remainingLetters > 0) {
+                answerArray.join(" ");
+                for (var i = 0; i < currentWord.length; i++) {
+                    if (currentWord[i] === userGuess) {
+                        answerArray[i] = userGuess;
+                        remainingLetters--;
+                        findmatch = 1;
 
-
-
+                    }
+                }
+            }
+            if (findmatch === 0) {
+                guessesRemaining--;
+            }
             //display your #ofgameswon, guesses remaining, lettersguessed
-            gamesWon.textContent = "Games won: " + gamesWon;
-            currentWord.textContent = "current word (must fix)";
-            guessesRemaining.textContent = "Guesses Remaining " + guessesRemaining;
-            lettersGuessed.textContent = "Letters guessed: " + lettersGuessed;
-            remainingLetters.textContent = "# of letters remaining: " + remainingLetters;
+            gamesWonText.textContent = "Games won: " + gamesWon;
+            currentWordText.textContent = "Current word: " + currentWord;
+            guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
+            lettersGuessedText.textContent = "Letters guessed: " + lettersGuessed;
+            remainingLettersText.textContent = "# of letters remaining: " + remainingLetters;
+            answerArrayText.textContent = answerArray;
+
+
         }
 
     </script>

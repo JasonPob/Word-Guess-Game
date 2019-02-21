@@ -39,12 +39,12 @@
 
       // Determines which key was pressed.
       var userGuess = event.key;
-
+  
       // Randomly chooses a choice from the options array. This is the Computer's guess.
       var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
       // Reworked our code from last step to use "else if" instead of lots of if statements.
-
+console.log(userGuess);
       // This logic determines the outcome of the game (win/loss/tie), and increments the appropriate number
       if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
 
@@ -67,6 +67,7 @@
         winsText.textContent = "wins: " + wins;
         lossesText.textContent = "losses: " + losses;
         tiesText.textContent = "ties: " + ties;
+console.log(userGuess);
       }
     };
   </script>
