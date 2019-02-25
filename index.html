@@ -3,13 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- <script src="assets/javascript/"></script> -->
+
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <script src="assets/javascript/game.js"></script>
     <title>Word Guess Game</title>
 </head>
 
 <body>
-    <h1>Penn Hangman!</h1>
+    <div class="container">
+    <h1>Penn LPS Staff Hangman!</h1>
     <div>
         <br>
         <p id="instructions-text"> Press any key to get started!</p>
@@ -26,90 +28,105 @@
         <p id="gamesWon"></p>
         <p id="gamesLost"></p>
     </div>
+</div>
 
     <script type="text/javascript">
-        //array containing all possible generated words
-        var generatedWord = ["anthony", "eliza", "petrell", "cadin"]
-
-        //Randomly choose a word
-        var currentWord = generatedWord[Math.floor(Math.random() * generatedWord.length)];
-        currentWord.textContent = "Current word: " + currentWord;
-
-        //answer array
-        var answerArray = [];
-        for (var i = 0; i < currentWord.length; i++) {
-            answerArray[i] = "_";
-        }
-
-        //variables that hold #ofgameswon, guesses remaining, letters guessed
+        //game counters
         var gamesWon = 0;
-        var remainingLetters = currentWord.length;
-        var guessesRemaining = 6;
-
-        var incorrectLetters = [];
         var gamesLost = 0;
-        var findmatch = 0;
 
-        //variables that hold references to the places in the HTML where we want to display things
-        var gamesWonText = document.getElementById("gamesWon");
-        var currentWordText = document.getElementById("currentWord");
-        var guessesRemainingText = document.getElementById("guessesRemaining");
-        var incorrectLettersText = document.getElementById("incorrectLetters");
-        var remainingLettersText = document.getElementById("remainingLetters");
-        var answerArrayText = document.getElementById("answerArray");
-        var gamesLostText = document.getElementById("gamesLost");
+        //function for entire game
+        gameReset = function (on) {
 
 
-        //function run whenever the user guesses a letter
-        document.onkeyup = function (event) {
+            //array containing all possible generated words
+            var generatedWord = ["anthony", "eliza", "petrell", "cadin", "edward", "andrew", "erik", "scott", "coco"]
 
-            // determining which key was pressed
-            var userGuess = event.key;
-            findmatch = 0;
+            //Randomly choose a word
+            var currentWord = generatedWord[Math.floor(Math.random() * generatedWord.length)];
 
-            //Checking is guess is in currentWord
-            if (remainingLetters > 0) {
-                answerArray.join(" ");
+            currentWord.textContent = "Current word: " + currentWord;
 
-                for (var i = 0; i < currentWord.length; i++) {
-                    console.log("start", "User Guess: " + userGuess, "i = " + i, "currentWord: " + currentWord[i], "remainingLetters: " + remainingLetters, "findmatch: " + findmatch)
-                    if (currentWord[i] === userGuess) {
-                        answerArray[i] = userGuess;
-                        remainingLetters--;
-                        findmatch = 1;
+            // //answer array
+            var answerArray = [];
+            for (var i = 0; i < currentWord.length; i++) {
+                answerArray[i] = "_";
+            }
 
+            //variables that hold #ofgameswon, guesses remaining, letters guessed
+
+            var remainingLetters = currentWord.length;
+            var guessesRemaining = 6;
+            var incorrectLetters = [];
+            var findmatch = false;
+
+            //variables that hold references to the places in the HTML where we want to display things
+            var gamesWonText = document.getElementById("gamesWon");
+            var currentWordText = document.getElementById("currentWord");
+            var guessesRemainingText = document.getElementById("guessesRemaining");
+            var incorrectLettersText = document.getElementById("incorrectLetters");
+            var remainingLettersText = document.getElementById("remainingLetters");
+            var answerArrayText = document.getElementById("answerArray");
+            var gamesLostText = document.getElementById("gamesLost");
+
+
+            //function run whenever the user guesses a letter
+            document.onkeyup = function (event) {
+
+                // determining which key was pressed
+                var userGuess = event.key;
+                findmatch = false;
+
+                //Checking is guess is in currentWord
+                if (remainingLetters > 0) {
+                    answerArray.join(" ");
+
+                    for (var i = 0; i < currentWord.length; i++) {
+                        console.log("start", "User Guess: " + userGuess, "i = " + i, "currentWord: " + currentWord[i], "remainingLetters: " + remainingLetters, "findmatch: " + findmatch)
+                        if (currentWord[i] === userGuess) {
+                            answerArray[i] = userGuess;
+                            remainingLetters--;
+                            findmatch = true;
+
+                        }
+
+
+                        console.log("end", "userguess: " + userGuess, "i = " + i, "currentWord: " + currentWord[i], "remainingLetters: " + remainingLetters, "findmatch " + findmatch)
+                        console.log("-----------");
                     }
 
-                    console.log("end", "userguess: " + userGuess, "i = " + i, "currentWord: " + currentWord[i], "remainingLetters: " + remainingLetters, "findmatch " + findmatch)
-                    console.log("-----------");
+                }
+                if (findmatch === false) {
+                    guessesRemaining--;
+                    incorrectLetters.push(userGuess);
+                }
+                if (remainingLetters === 0) {
+                    currentWord = generatedWord[Math.floor(Math.random() * generatedWord.length)];
+                    gameReset();
+                    gamesWon++
                 }
 
-            }
-            if (findmatch === 0) {
-                guessesRemaining--;
-            }
-            if (remainingLetters === 0) {
-                gamesWon++
-            }
-            if (currentWord[i] !== userGuess) {
-
-                incorrectLetters.push(userGuess);
-            }
-            if (guessesRemaining === 0) {
-                gamesLost++
-            }
+                if (guessesRemaining === 0) {
+                    currentWord = generatedWord[Math.floor(Math.random() * generatedWord.length)];
+                    gameReset();
+                    gamesLost++
 
 
-            //display your #ofgameswon, guesses remaining, incorrectLetters
-            guessesRemainingText.textContent = "Guesses remaining: " + guessesRemaining;
-            incorrectLettersText.textContent = "Incorrect Letters: " + incorrectLetters;
-            remainingLettersText.textContent = "# of letters remaining: " + remainingLetters;
-            gamesWonText.textContent = "Games Won: " + gamesWon;
-            answerArrayText.textContent = answerArray;
-            gamesLostText.textContent = "Games Lost: " + gamesLost;
+                }
 
 
+                //display your #ofgameswon, guesses remaining, incorrectLetters
+                guessesRemainingText.textContent = "Guesses remaining: " + guessesRemaining;
+                incorrectLettersText.textContent = "Incorrect Letters: " + incorrectLetters;
+                remainingLettersText.textContent = "# of letters remaining: " + remainingLetters;
+                gamesWonText.textContent = "Games Won: " + gamesWon;
+                answerArrayText.textContent = answerArray;
+                gamesLostText.textContent = "Games Lost: " + gamesLost;
+
+
+            }
         }
+        gameReset();
 
     </script>
 
@@ -117,5 +134,6 @@
 
 
 </body>
+<!-- <script src="assets/javascript/"></script> -->
 
 </html>
