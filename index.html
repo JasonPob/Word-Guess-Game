@@ -24,13 +24,14 @@
             <div class="row">
 
                 <div class="col-md-12 mb-4 text-white text-left">
-                    <h1 class=" animated bounceInLeft h1-reponsive text-center text-white text-uppercase font-weight-bold mb-0 pt-md-5 pt-5">
+                    <h1
+                        class=" animated bounceInLeft h1-reponsive text-center text-white text-uppercase font-weight-bold mb-0 pt-md-5 pt-5">
                         <strong> Hangman Game: Penn LPS Staff!</strong></h1>
-                        
+
                     <hr>
                     <div>
                         <br>
-                        <h5 class="animated jackInTheBox mb-4 white-text">Press any key to get started!</h5>
+                        <h5 class="animated jackInTheBox mb-4 white-text">Press any letter key to get started!</h5>
                         <br>
                         <br>
                         <h2 id="answerArray"></h2>
@@ -60,14 +61,14 @@
 
 
             //array containing all possible generated words
-            var generatedWord = ["anthony", "eliza", "petrell", "cadin", "edward", "andrew", "erik", "scott", "coco","bernard"]
+            var generatedWord = ["anthony", "eliza", "petrell", "cadin", "edward", "andrew", "erik", "scott", "coco", "bernard"]
 
             //Randomly choose a word
             var currentWord = generatedWord[Math.floor(Math.random() * generatedWord.length)];
 
-            currentWord.textContent = "Current word: " + currentWord;
 
-            // //answer array
+
+            //answer array
             var answerArray = [];
             for (var i = 0; i < currentWord.length; i++) {
                 answerArray[i] = "_";
@@ -89,7 +90,8 @@
             var answerArrayText = document.getElementById("answerArray");
             var gamesLostText = document.getElementById("gamesLost");
 
-
+            //always display word first
+            answerArrayText.textContent = answerArray;
             //function run whenever the user guesses a letter
             document.onkeyup = function (event) {
 
@@ -97,50 +99,57 @@
                 var userGuess = event.key;
                 findmatch = false;
 
-               
-                //Checking is guess is in currentWord
-                if (remainingLetters > 0) {
-                    answerArray.join(" ");
+                if ((userGuess === "a") || (userGuess === "b") || (userGuess === "c") || (userGuess === "d") || (userGuess === "e") || (userGuess === "f") || (userGuess === "g") || (userGuess === "h") || (userGuess === "i") || (userGuess === "j") || (userGuess === "k") || (userGuess === "l") || (userGuess === "m") || (userGuess === "n") || (userGuess === "o") || (userGuess === "p") || (userGuess === "q") || (userGuess === "r") || (userGuess === "s") || (userGuess === "t") || (userGuess === "u") || (userGuess === "v") || (userGuess === "w") || (userGuess === "x") || (userGuess === "y") || (userGuess === "z")) {
 
-                    for (var i = 0; i < currentWord.length; i++) {
+                    //Checking is guess is in currentWord
+                    if (remainingLetters > 0) {
+                        answerArray.join(" ");
 
-                        if (currentWord[i] === userGuess) {
-                            answerArray[i] = userGuess;
-                            remainingLetters--;
-                            findmatch = true;
-            
+                        for (var i = 0; i < currentWord.length; i++) {
+
+                            if (currentWord[i] === userGuess) {
+                                answerArray[i] = userGuess;
+                                remainingLetters--;
+                                findmatch = true;
+
+                            }
+
                         }
-                    
                     }
-                }
-                
-                if (findmatch === false) {
-                    guessesRemaining--;
-                    incorrectLetters.push(userGuess);
-                }
-                if (remainingLetters === 0) {
-                    currentWord = generatedWord[Math.floor(Math.random() * generatedWord.length)];
-                    gameReset();
-                    gamesWon++
+                    // if (remainingLetters === 0) {
+                    //    gameReset();
+                        
+                    // }
+
+                    if (findmatch === false) {
+                        guessesRemaining--;
+                        incorrectLetters.push(userGuess);
+                    }
+                    if (remainingLetters === 0) {
+                        gamesWon++
+                        gameReset();
+                    }
+
+                    if (guessesRemaining === 0) {
+                        gamesLost++
+                        gameReset();
+                    }
+
+                    // //display your #ofgameswon, guesses remaining, incorrectLetters
+                    guessesRemainingText.textContent = "Guesses remaining: " + guessesRemaining;
+                    incorrectLettersText.textContent = "Incorrect Letters: " + incorrectLetters;
+                    remainingLettersText.textContent = "# of letters remaining: " + remainingLetters;
+                    gamesWonText.textContent = "Games Won: " + gamesWon;
+                    answerArrayText.textContent = answerArray;
+                    gamesLostText.textContent = "Games Lost: " + gamesLost;
+
+
                 }
 
-                if (guessesRemaining === 0) {
-                    currentWord = generatedWord[Math.floor(Math.random() * generatedWord.length)];
-                    gameReset();
-                    gamesLost++
-                }
+            }
+        }
 
-                //display your #ofgameswon, guesses remaining, incorrectLetters
-                guessesRemainingText.textContent = "Guesses remaining: " + guessesRemaining;
-                incorrectLettersText.textContent = "Incorrect Letters: " + incorrectLetters;
-                remainingLettersText.textContent = "# of letters remaining: " + remainingLetters;
-                gamesWonText.textContent = "Games Won: " + gamesWon;
-                answerArrayText.textContent = answerArray;
-                gamesLostText.textContent = "Games Lost: " + gamesLost;
-            
-        
-    }
-}
+
         gameReset();
 
     </script>
