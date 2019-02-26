@@ -133,15 +133,7 @@
                     guessesRemaining--;
                     incorrectLetters.push(userGuess);
                 }
-                if (remainingLetters === 0) {
-                    gamesWon++
-                    gameReset();
-                }
 
-                if (guessesRemaining === 0) {
-                    gamesLost++
-                    gameReset();
-                }
 
                 // display current #ofgameswon, guesses remaining, incorrectLetters
                 guessesRemainingText.textContent = "Guesses remaining: " + guessesRemaining;
@@ -150,7 +142,19 @@
                 gamesWonText.textContent = "Games Won: " + gamesWon;
                 answerArrayText.textContent = "Current Word: " + answerArray;
                 gamesLostText.textContent = "Games Lost: " + gamesLost;
-            }
+
+                if (remainingLetters === 0) {
+                    gamesWon++;
+                    alert("You won! The answer was " + currentWord);
+                    gameReset();
+                }
+
+                if (guessesRemaining === 0) {
+                    gamesLost++;
+                    alert("You lost! The correct answer was " + currentWord);
+                    gameReset();
+                }
+            }//valid key input
 
         }
 
